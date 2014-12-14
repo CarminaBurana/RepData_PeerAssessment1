@@ -27,7 +27,8 @@ The dataset is stored in a comma-separated-value (CSV) file and there are a tota
 We start by unzipping and loading the dataset.
 Then, we filter out incomplete cases (NAs) from dataset.
 
-```{r}
+
+```r
 activity <- read.csv(unz("activity.zip", "activity.csv"))
 ```
 
@@ -35,7 +36,8 @@ activity <- read.csv(unz("activity.zip", "activity.csv"))
 
 Per project instructions, <span style="background-color:yellow">for this part of the assignment, we can ignore the missing values in the dataset</span>.
 
-```{r}
+
+```r
 activity_without_NAs <- activity[complete.cases(activity),]
 ```
 
@@ -43,7 +45,8 @@ This means that we compute all values using the activity data without mising val
 
 1. Make a histogram of the total number of steps taken each day:
 
-```{r}
+
+```r
 steps_by_date <- sapply(
   split(activity_without_NAs, activity_without_NAs$date), 
   function(x) sum(x$steps))
@@ -51,19 +54,23 @@ steps_by_date <- sapply(
 barplot(steps_by_date, xlab = "Date", ylab = "Number of steps")
 ```
 
+![plot of chunk unnamed-chunk-3](figure/unnamed-chunk-3.png) 
+
 2. Calculate and report the mean and median total number of steps taken per day
 
-```{r}
+
+```r
 mean <- mean(steps_by_date, na.rm = TRUE)
 median <- median(steps_by_date, na.rm = TRUE)
 ```
 
-- <span style="background-color:yellow">Mean: <b>`r prettyNum(as.integer(mean), big.mark=",")`</b> steps</span>
-- <span style="background-color:yellow">Median: <b>`r prettyNum(median, big.mark=",")`</b> steps</span>
+- <span style="background-color:yellow">Mean: <b>9,354</b> steps</span>
+- <span style="background-color:yellow">Median: <b>10,395</b> steps</span>
 
 For further reference, we include below computation of Mean and Median for original data including rows with missing data (NAs):
 
-```{r}
+
+```r
 steps_by_date <- sapply(
   split(activity, activity$date), 
   function(x) sum(x$steps))
@@ -72,14 +79,15 @@ mean <- mean(steps_by_date, na.rm = TRUE)
 median <- median(steps_by_date, na.rm = TRUE)
 ```
 
-- <span style="background-color:yellow">Mean (including missing data): <b>`r prettyNum(as.integer(mean), big.mark=",")`</b> steps</span> 
-- <span style="background-color:yellow">Median (including missing data): <b>`r prettyNum(median, big.mark=",")`</b> steps</span>
+- <span style="background-color:yellow">Mean (including missing data): <b>10,766</b> steps</span> 
+- <span style="background-color:yellow">Median (including missing data): <b>10,765</b> steps</span>
 
 ## What is the average daily activity pattern?
 
 1. Make a time series plot (i.e. type = "l") of the 5-minute interval (x-axis) and the average number of steps taken, averaged across all days (y-axis)
 
-```{r}
+
+```r
 mean_steps_by_interval <- sapply(
   split(activity_without_NAs, activity_without_NAs$interval), 
   function(x) mean(x$steps))
@@ -93,13 +101,16 @@ plot(x_labels,
      ylab = "Number of steps")
 ```
 
+![plot of chunk unnamed-chunk-6](figure/unnamed-chunk-6.png) 
+
 2. Which 5-minute interval, on average across all the days in the dataset, contains the maximum number of steps?
 
-```{r}
+
+```r
 interval_with_max_number_of_steps_on_avg <- labels(which.max(mean_steps_by_interval))
 ```
 
-- <span style="background-color:yellow">Interval with maximum number of steps on average: <b>`r interval_with_max_number_of_steps_on_avg`</b></span>
+- <span style="background-color:yellow">Interval with maximum number of steps on average: <b>835</b></span>
 
 ## Imputing missing values
 
@@ -110,11 +121,12 @@ There are a number of days/intervals where there are missing values (coded as NA
 We already know that the total number of observations is 17,568.
 So, we simply subtract the number of observations without missing values from this.
 
-```{r}
+
+```r
 count_of_missing_values <- 17568 - nrow(activity_without_NAs)
 ```
 
-- <span style="background-color:yellow">Total number of missing values in original dataset: <b>`r prettyNum(count_of_missing_values, big.mark=",")`</b></span>
+- <span style="background-color:yellow">Total number of missing values in original dataset: <b>2,304</b></span>
 
 2. Devise a strategy for filling in all of the missing values in the dataset. 
 
@@ -122,7 +134,8 @@ The strategy chosen is to replace the missing values with the mean for that 5-mi
 
 3. Create a new dataset that is equal to the original dataset but with the missing data filled in.
 
-```{r}
+
+```r
 activity_with_filled_in_data <- activity
 
 for(i in 1:nrow(activity_with_filled_in_data))
@@ -138,7 +151,8 @@ for(i in 1:nrow(activity_with_filled_in_data))
 
 We will compute total number of steps taken each day by using same code as above:
 
-```{r}
+
+```r
 steps_by_date <- sapply(
   split(activity_with_filled_in_data, activity_with_filled_in_data$date), 
   function(x) sum(x$steps))
@@ -146,15 +160,18 @@ steps_by_date <- sapply(
 barplot(steps_by_date, xlab = "Date", ylab = "Number of steps")
 ```
 
+![plot of chunk unnamed-chunk-10](figure/unnamed-chunk-10.png) 
+
 Similarily, we will compute Mean and Median:
 
-```{r}
+
+```r
 mean <- mean(steps_by_date, na.rm=TRUE)
 median <- median(steps_by_date, na.rm=TRUE)
 ```
 
-- <span style="background-color:yellow">Mean: <b>`r prettyNum(mean, big.mark=",")`</b> steps</span>
-- <span style="background-color:yellow">Median: <b>`r prettyNum(median, big.mark=",")`</b> steps</span>
+- <span style="background-color:yellow">Mean: <b>10,766</b> steps</span>
+- <span style="background-color:yellow">Median: <b>10,766</b> steps</span>
 
 Do these values differ from the estimates from the first part of the assignment? 
 
@@ -173,7 +190,8 @@ For this part the weekdays() function may be of some help here. Use the dataset 
 
 1. Create a new factor variable in the dataset with two levels -- "weekday" and "weekend" indicating whether a given date is a weekday or weekend day.
 
-```{r}
+
+```r
 activity_with_filled_in_data$date <- as.Date(activity_with_filled_in_data$date)
 
 for (i in 1:nrow(activity_with_filled_in_data)) {
@@ -190,7 +208,8 @@ colnames(activity_with_filled_in_data)[4] <- "day_type"
 
 2. Make a panel plot containing a time series plot (i.e. type = "l") of the 5-minute interval (x-axis) and the average number of steps taken, averaged across all weekday days or weekend days (y-axis). 
 
-```{r fig.height=10, fig.width=10}
+
+```r
 weekday <- activity_with_filled_in_data[activity_with_filled_in_data$day_type == "weekday",]
 avg_steps_weekday <- sapply(
   split(weekday, weekday$interval),
@@ -213,6 +232,8 @@ plot(x_labels_weekend, avg_steps_weekend,
      main = "Weekend", type = "l", 
      xlab = "Time Interval", ylab = "Number of Steps")
 ```
+
+![plot of chunk unnamed-chunk-13](figure/unnamed-chunk-13.png) 
 
 By comparing the two plots, we observe that the individual seems to be more active on weekends especially between minutes 1,000 and 2,000. Perhaps this indicates some kind of physical activity happening on weekends and/or a more static activity during weekdays.
 
