@@ -83,13 +83,13 @@ avg_steps_weekend <- sapply(
   function(x) mean(x$steps, na.rm = TRUE))
 x_labels_weekend <- as.numeric(labels(avg_steps_weekend))
 
-par(mfrow = c(2,1))
+par(mfrow = c(2, 1), oma = c(1, 1, 0, 1))
 
 plot(x_labels_weekday, avg_steps_weekday, 
-     main = "Weekday", type = "l", 
-     xlab = "Interval", ylab = "Number of Steps")
+     main = "Weekday", type = "l", xlab = "", ylab = "")
 
 plot(x_labels_weekend, avg_steps_weekend, 
-     main = "Weekend", type = "l", 
-     xlab = "Interval", ylab = "Number of Steps")
+     main = "Weekend", type = "l", xlab = "", ylab = "")
 
+mtext("Time Interval", outer = TRUE, side = 1)
+mtext("Number of Steps", outer = TRUE, side = 2)

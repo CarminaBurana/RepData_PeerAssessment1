@@ -1,5 +1,5 @@
 
-# Reproducible Research: Peer Assessment 1<br/><br/>
+# Reproducible Research: Peer Assessment 1<br/>
 
 
 ## Data
@@ -219,18 +219,19 @@ avg_steps_weekend <- sapply(
   function(x) mean(x$steps, na.rm = TRUE))
 x_labels_weekend <- as.numeric(labels(avg_steps_weekend))
 
-par(mfrow = c(2,1))
+par(mfrow = c(2, 1), oma = c(1, 1, 0, 1))
 
 plot(x_labels_weekday, avg_steps_weekday, 
-     main = "Weekday", type = "l", 
-     xlab = "Time Interval", ylab = "Number of Steps")
+     main = "Weekday", type = "l", xlab = "", ylab = "")
 
 plot(x_labels_weekend, avg_steps_weekend, 
-     main = "Weekend", type = "l", 
-     xlab = "Time Interval", ylab = "Number of Steps")
+     main = "Weekend", type = "l", xlab = "", ylab = "")
+
+mtext("Time Interval", outer = TRUE, side = 1)
+mtext("Number of Steps", outer = TRUE, side = 2)
 ```
 
 ![plot of chunk unnamed-chunk-13](figure/unnamed-chunk-13.png) 
-
+<br/><br/>
 By comparing the two plots, we observe that the individual seems to be more active on weekends especially between minutes 1,000 and 2,000. Perhaps this indicates some kind of physical activity happening on weekends and/or a more static activity during weekdays.
 
