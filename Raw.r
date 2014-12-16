@@ -8,7 +8,7 @@ steps_by_date <- sapply(
   split(activity_without_NAs, activity_without_NAs$date), 
   function(x) sum(x$steps))
 
-barplot(steps_by_date, xlab = "Date", ylab = "Number of steps")
+hist(steps_by_date, breaks = 12, main = "Total Number of Steps per Day", xlab = "Number of Steps per Day", ylab = "Frequency", col="blue")
 
 mean <- mean(steps_by_date, na.rm = TRUE)
 median <- median(steps_by_date, na.rm = TRUE)
@@ -51,7 +51,7 @@ steps_by_date <- sapply(
   split(activity_with_filled_in_data, activity_with_filled_in_data$date), 
   function(x) sum(x$steps))
 
-barplot(steps_by_date, xlab = "Date", ylab = "Number of steps")
+hist(steps_by_date, breaks = 12, main = "Total Number of Steps per Day", xlab = "Number of Steps per Day", ylab = "Frequency", col="blue")
 
 mean <- mean(steps_by_date, na.rm=TRUE)
 median <- median(steps_by_date, na.rm=TRUE)
