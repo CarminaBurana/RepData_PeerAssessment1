@@ -48,7 +48,7 @@ steps_by_date <- sapply(
   split(activity_without_NAs, activity_without_NAs$date), 
   function(x) sum(x$steps))
 
-barplot(steps_by_date, xlab = "Date", ylab = "Number of steps")
+hist(steps_by_date, breaks = 12, main = "Total Number of Steps per Day", xlab = "Number of Steps per Day", ylab = "Frequency", col="blue")
 ```
 
 ![plot of chunk unnamed-chunk-3](figure/unnamed-chunk-3.png) 
@@ -154,7 +154,7 @@ steps_by_date <- sapply(
   split(activity_with_filled_in_data, activity_with_filled_in_data$date), 
   function(x) sum(x$steps))
 
-barplot(steps_by_date, xlab = "Date", ylab = "Number of steps")
+hist(steps_by_date, breaks = 12, main = "Total Number of Steps per Day", xlab = "Number of Steps per Day", ylab = "Frequency", col="blue")
 ```
 
 ![plot of chunk unnamed-chunk-10](figure/unnamed-chunk-10.png) 
